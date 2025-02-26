@@ -135,7 +135,7 @@ class Dictionary:
 
     def reduce(
         self,
-        function: Callable[[Any, Any],Any],
+        function: Callable[[Any, Any], Any],
         initial_state: Any
     ) -> Any:
         """归约字典中的值，返回最终结果"""
