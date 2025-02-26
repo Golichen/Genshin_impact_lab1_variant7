@@ -62,7 +62,13 @@ def test_to_list():
     dictionary = Dictionary()
     dictionary.add("name", "Alice")
     dictionary.add("age", 25)
-    assert sorted(dictionary.to_list(), key=lambda x: str(x[0])) == [("age", 25), ("name", "Alice")]
+    
+    # 获取排序后的键值对列表
+    result = sorted(dictionary.to_list(), key=lambda x: str(x[0]))
+    expected = [("age", 25), ("name", "Alice")]
+
+    # 断言结果与预期一致
+    assert result == expected
 
 
 def test_filter():
@@ -70,15 +76,29 @@ def test_filter():
     dictionary = Dictionary()
     dictionary.from_list([("name", "Alice"), ("age", 25), ("height", 170)])
     filtered_dict = dictionary.filter(lambda k, v: isinstance(v, int))  # 过滤值为整数的键值对
-    assert sorted(filtered_dict.to_list(), key=lambda x: str(x[0])) == [("age", 25), ("height", 170)]
+
+    result = sorted(filtered_dict.to_list(), key=lambda x: str(x[0]))
+    expected = [("age", 25), ("height", 170)]
+    
+    assert result == expected
 
 
 def test_map():
     """测试映射字典功能"""
     dictionary = Dictionary()
     dictionary.from_list([("name", "Alice"), ("age", 25)])
-    mapped_dict = dictionary.map(lambda v: v.upper() if isinstance(v, str) else v)  # 对字符串值转换为大写
-    assert sorted(mapped_dict.to_list(), key=lambda x: str(x[0])) == [("age", 25), ("name", "ALICE")]
+    
+    # 定义映射函数
+    def map_function(value: Any) -> Any:
+        return value.upper() if isinstance(value, str) else value
+
+    # 对字典中的每个值应用映射函数
+    mapped_dict = dictionary.map(map_function)
+
+    result = sorted(mapped_dict.to_list(), key=lambda x: str(x[0]))
+    expected = [("age", 25), ("name", "ALICE")]
+    
+    assert result == expected
 
 
 def test_reduce():
@@ -94,7 +114,11 @@ def test_iter():
     dictionary = Dictionary()
     dictionary.from_list([("name", "Alice"), ("age", 25)])
     items = list(iter(dictionary))
-    assert sorted(items, key=lambda x: str(x[0])) == [("age", 25), ("name", "Alice")]
+
+    result = sorted(items, key=lambda x: str(x[0]))
+    expected = [("age", 25), ("name", "Alice")]
+    
+    assert result == expected
 
 
 def test_empty():
@@ -111,7 +135,11 @@ def test_concat():
     dictionary2 = Dictionary()
     dictionary2.from_list([("age", 25)])
     combined_dict = dictionary1.concat(dictionary2)
-    assert sorted(combined_dict.to_list(), key=lambda x: str(x[0])) == [("age", 25), ("name", "Alice")]
+
+    result = sorted(combined_dict.to_list(), key=lambda x: str(x[0]))
+    expected = [("age", 25), ("name", "Alice")]
+    
+    assert result == expected
 
 
 def test_monoid_properties():
@@ -169,4 +197,8 @@ def test_mixed_types():
     # 转换为列表并排序
     result = dictionary.to_list()
     expected = [("name", "Alice"), ("age", 25), (42, "answer")]
-    assert sorted(result, key=lambda x: str(x[0])) == sorted(expected, key=lambda x: str(x[0]))
+
+    sorted_result = sorted(result, key=lambda x: str(x[0]))
+    sorted_expected = sorted(expected, key=lambda x: str(x[0]))
+
+    assert sorted_result == sorted_expected
