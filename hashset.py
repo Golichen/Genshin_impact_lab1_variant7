@@ -42,8 +42,8 @@ class HashSet:
         elif not isinstance(value, self._element_type):
             # 如果类型不一致，发出警告
             warnings.warn(
-                f"Adding element of type {type(value)} to a HashSet 
-                containing {self._element_type}. "
+                f"Adding element of type {type(value)} to a HashSet "
+                f"containing {self._element_type}. "
                 "Mixed types may cause unexpected behavior.",
                 UserWarning,
                 )
