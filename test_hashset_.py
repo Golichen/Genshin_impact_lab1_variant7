@@ -172,10 +172,14 @@ def test_monoid():
 
 
 def test_none_value():
-    try:
-        hash_set = HashSet(None)
-    except ValueError as e:
-        assert str(e) == "Capacity must be a positive integer."
+    with pytest.raises(ValueError) as exc_info:
+        HashSet(None)
+    assert str(exc_info.value) == "Capacity must be a positive integer."
+    
+    hash_set = HashSet()
+    with pytest.raises(ValueError) as exc_info:
+        hash_set.add(None)
+    assert str(exc_info.value) == "None values are not allowed in this set."
 
 
 def test_different_types():
