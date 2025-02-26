@@ -6,7 +6,8 @@ enough for educational purposes.
 
 ## Project structure
 
-- `hashset.py` -- implementation of `HashSet` class and `Node` class with multiple features.
+- `hashset.py` -- implementation of `HashSet` class and
+`Node` class with multiple features.
    Stateless.
 - `hashset_test.py` -- unit and PBT tests for `hashset`.
 
