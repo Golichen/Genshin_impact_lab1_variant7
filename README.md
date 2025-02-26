@@ -1,4 +1,4 @@
-# GROUP-NAME - lab NUMBER - variant NUMBER
+# Genshin-impact - lab 1 - variant 4
 
 This is an example project which demonstrates project structure and necessary
 CI checks. It is not the best structure for real-world projects, but good
@@ -6,9 +6,9 @@ enough for educational purposes.
 
 ## Project structure
 
-- `foo.py` -- implementation of `Foo` class with `hello` and `add` features.
+- `hashset.py` -- implementation of `HashSet` class and `Node` class with multiple features.
    Stateless.
-- `foo_test.py` -- unit and PBT tests for `Foo`.
+- `hashset_test.py` -- unit and PBT tests for `hashset`.
 
 ## Features
 
@@ -16,7 +16,7 @@ enough for educational purposes.
 
 ## Contribution
 
-- Aleksandr Penskoi (EMAIL) -- all work.
+- GAO Lichen -- all work, 'cause there's only one member.
 
 ## Changelog
 
