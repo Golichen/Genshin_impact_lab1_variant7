@@ -175,7 +175,7 @@ def test_none_value():
     with pytest.raises(ValueError) as exc_info:
         HashSet(None)
     assert str(exc_info.value) == "Capacity must be a positive integer."
-    
+
     hash_set = HashSet()
     with pytest.raises(ValueError) as exc_info:
         hash_set.add(None)
