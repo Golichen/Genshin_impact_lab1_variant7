@@ -63,7 +63,7 @@ def test_to_list():
     dictionary = Dictionary()
     dictionary.add("name", "Alice")
     dictionary.add("age", 25)
-    
+
     # 获取排序后的键值对列表
     result = sorted(dictionary.to_list(), key=lambda x: str(x[0]))
     expected = [("age", 25), ("name", "Alice")]
@@ -76,11 +76,14 @@ def test_filter():
     """测试过滤字典功能"""
     dictionary = Dictionary()
     dictionary.from_list([("name", "Alice"), ("age", 25), ("height", 170)])
-    filtered_dict = dictionary.filter(lambda k, v: isinstance(v, int))  # 过滤值为整数的键值对
+    filtered_dict = dictionary.filter(
+        lambda k,
+        v: isinstance(v, int)
+    )  # 过滤值为整数的键值对
 
     result = sorted(filtered_dict.to_list(), key=lambda x: str(x[0]))
     expected = [("age", 25), ("height", 170)]
-    
+
     assert result == expected
 
 
@@ -88,7 +91,7 @@ def test_map():
     """测试映射字典功能"""
     dictionary = Dictionary()
     dictionary.from_list([("name", "Alice"), ("age", 25)])
-    
+
     # 定义映射函数
     def map_function(value: Any) -> Any:
         return value.upper() if isinstance(value, str) else value
@@ -98,7 +101,7 @@ def test_map():
 
     result = sorted(mapped_dict.to_list(), key=lambda x: str(x[0]))
     expected = [("age", 25), ("name", "ALICE")]
-    
+
     assert result == expected
 
 
@@ -118,7 +121,7 @@ def test_iter():
 
     result = sorted(items, key=lambda x: str(x[0]))
     expected = [("age", 25), ("name", "Alice")]
-    
+
     assert result == expected
 
 
@@ -139,7 +142,7 @@ def test_concat():
 
     result = sorted(combined_dict.to_list(), key=lambda x: str(x[0]))
     expected = [("age", 25), ("name", "Alice")]
-    
+
     assert result == expected
 
 
