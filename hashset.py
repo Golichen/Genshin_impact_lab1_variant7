@@ -1,8 +1,9 @@
 import warnings
 from typing import Any, List, Optional, Callable, Type
 
+
 class Node:
-    #表示哈希表中的节点（用于分离链接法）
+    # 表示哈希表中的节点（用于分离链接法）
 
     def __init__(self, value: Any, next_: Optional['Node'] = None):
         self.value = value
@@ -10,7 +11,7 @@ class Node:
 
 
 class HashSet:
-    #基于哈希映射和分离链接法实现的集合。
+    # 基于哈希映射和分离链接法实现的集合。
 
     def __init__(self, capacity: int = 10):
         # 验证 capacity 是否为整数且大于 0
@@ -23,14 +24,14 @@ class HashSet:
         self._element_type: Optional[Type] = None  # 记录第一个元素的类型
 
     def _hash(self, value: Any) -> int:
-        #计算值的哈希值，并映射到桶的索引
+        # 计算值的哈希值，并映射到桶的索引
         try:
             return hash(value) % self.capacity
         except TypeError as e:
             raise TypeError(f"Unhashable type: {type(value)}") from e
 
     def add(self, value: Any) -> None:
-        #向集合中添加一个值
+        # 向集合中添加一个值
         if value is None:
             raise ValueError("None values are not allowed in this set.")
 
@@ -41,13 +42,14 @@ class HashSet:
         elif not isinstance(value, self._element_type):
             # 如果类型不一致，发出警告
             warnings.warn(
-                f"Adding element of type {type(value)} to a HashSet containing {self._element_type}. "
-                    "Mixed types may cause unexpected behavior.",
-                    UserWarning,
+                f"Adding element of type {type(value)} to a HashSet 
+                containing {self._element_type}. "
+                "Mixed types may cause unexpected behavior.",
+                UserWarning,
                 )
 
         try:
-            index = self._hash(value) #try to take hash function
+            index = self._hash(value)  #try to take hash function
         except TypeError as e:
             raise TypeError(f"Cannot add element of type {type(value)}: {e}")
         if self.buckets[index] is None:
@@ -89,11 +91,11 @@ class HashSet:
             cur = cur.next_
 
     def size(self) -> int:
-        #返回集合中元素的数量
+        # 返回集合中元素的数量
         return self._size
 
     def member(self, value: Any) -> bool:
-        #检查集合中是否包含某个值
+        # 检查集合中是否包含某个值
         if value is None:
             return False
 
@@ -106,12 +108,12 @@ class HashSet:
         return False
 
     def from_list(self, lst: List[Any]) -> None:
-        #从内置列表构建集合
+        # 从内置列表构建集合
         for value in lst:
             self.add(value)
 
     def to_list(self) -> List[Any]:
-        #将集合转换为内置列表
+        # 将集合转换为内置列表
         result = []
         for bucket in self.buckets:
             cur = bucket
@@ -121,7 +123,7 @@ class HashSet:
         return result
 
     def filter(self, predicate: Callable[[Any], bool]) -> 'HashSet':
-        #过滤集合中的元素，返回满足谓词的新集合
+        # 过滤集合中的元素，返回满足谓词的新集合
         new_set = HashSet(self.capacity)
         for bucket in self.buckets:
             cur = bucket
@@ -132,7 +134,7 @@ class HashSet:
         return new_set
 
     def map(self, function: Callable[[Any], Any]) -> 'HashSet':
-        #对集合中的每个元素应用函数，返回新集合
+        # 对集合中的每个元素应用函数，返回新集合
         new_set = HashSet(self.capacity)
         for bucket in self.buckets:
             cur = bucket
@@ -142,7 +144,7 @@ class HashSet:
         return new_set
 
     def reduce(self, function: Callable[[Any, Any], Any], initial_state: Any) -> Any:
-        #归约集合中的元素，返回最终结果
+        # 归约集合中的元素，返回最终结果
         state = initial_state
         for bucket in self.buckets:
             cur = bucket
@@ -152,13 +154,13 @@ class HashSet:
         return state
 
     def __iter__(self):
-        #返回集合的迭代器
+        # 返回集合的迭代器
         self._iter_index = 0
         self._iter_node = self.buckets[0]
         return self
 
     def __next__(self) -> Any:
-        #返回集合的下一个值
+        # 返回集合的下一个值
         while self._iter_index < self.capacity:
             if self._iter_node is not None:
                 value = self._iter_node.value
@@ -172,11 +174,11 @@ class HashSet:
 
     @staticmethod
     def empty() -> 'HashSet':
-        #返回一个空集合
+        # 返回一个空集合
         return HashSet()
 
     def concat(self, other: 'HashSet') -> 'HashSet':
-        #连接两个集合，返回新集合
+        # 连接两个集合，返回新集合
         new_set = HashSet(self.capacity)
         for value in self.to_list():
             new_set.add(value)
@@ -185,5 +187,5 @@ class HashSet:
         return new_set
 
     def __str__(self) -> str:
-        #返回集合的字符串表示
+        # 返回集合的字符串表示
         return "{" + ", ".join(map(str, self.to_list())) + "}"
