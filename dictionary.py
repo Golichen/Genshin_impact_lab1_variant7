@@ -58,7 +58,6 @@ class Dictionary:
                     self._size += 1
                 cur = cur.next_
 
-
     def get(self, key: Any) -> Optional[Any]:
         """根据键获取值，如果键不存在则返回 None"""
         if key is None:
