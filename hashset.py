@@ -51,7 +51,7 @@ class HashSet:
                 )
 
         try:
-            index = self._hash(value)  #try to take hash function
+            index = self._hash(value)  # try to take hash function
         except TypeError as e:
             raise TypeError(f"Cannot add element of type {type(value)}: {e}")
         if self.buckets[index] is None:
@@ -72,7 +72,7 @@ class HashSet:
             self._size += 1
 
     def remove(self, value: Any) -> None:
-        #从集合中移除一个值
+        # 从集合中移除一个值
         if value is None:
             return
 
