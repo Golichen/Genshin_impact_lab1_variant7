@@ -1,6 +1,5 @@
 from typing import Any
 from dictionary import Dictionary
-import warnings
 
 
 def test_add():
