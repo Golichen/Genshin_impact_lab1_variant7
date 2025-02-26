@@ -54,11 +54,10 @@ class Dictionary:
                     cur.value = value
                     return
                 if cur.next_ is None:
-                    break
+                    cur.next_ = Node(key, value)
+                    self._size += 1
                 cur = cur.next_
-            # 在链表末尾插入新节点
-            cur.next_ = Node(key, value)
-            self._size += 1
+
 
     def get(self, key: Any) -> Optional[Any]:
         """根据键获取值，如果键不存在则返回 None"""
