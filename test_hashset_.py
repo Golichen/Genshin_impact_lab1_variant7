@@ -152,13 +152,13 @@ def test_size_after_operations(lst):
 def test_monoid():
     # test for Monoid law
     hash_set1 = HashSet()
-    hash_set1.from_list([1,2,3])
+    hash_set1.from_list([1, 2, 3])
 
     hash_set2 = HashSet()
-    hash_set2.from_list([3,4,5])
+    hash_set2.from_list([3, 4, 5])
 
     hash_set3 = HashSet()
-    hash_set3.from_list([5,6,7])
+    hash_set3.from_list([5, 6, 7])
 
     # 验证结合律
     left = (hash_set1.concat(hash_set2)).concat(hash_set3)
