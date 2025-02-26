@@ -65,11 +65,11 @@ class HashSet:
                 if cur.value == value:
                     return  # 值已存在，无需添加
                 if cur.next_ is None:
-                    break
+                    # 在链表末尾插入新节点
+                    cur.next_ = Node(value)
+                    self._size += 1
+                    return
                 cur = cur.next_
-            # 在链表末尾插入新节点
-            cur.next_ = Node(value)
-            self._size += 1
 
     def remove(self, value: Any) -> None:
         # 从集合中移除一个值
