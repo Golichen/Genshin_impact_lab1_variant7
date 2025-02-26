@@ -133,7 +133,11 @@ class Dictionary:
             new_dict.add(key, function(value))
         return new_dict
 
-    def reduce(self, function: Callable[[Any, Any], Any], initial_state: Any) -> Any:
+    def reduce(
+        self,
+        function: Callable[[Any, Any],Any],
+        initial_state: Any
+    ) -> Any:
         """归约字典中的值，返回最终结果"""
         state = initial_state
         for _, value in self.to_list():
