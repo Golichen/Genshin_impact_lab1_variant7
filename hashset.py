@@ -19,7 +19,9 @@ class HashSet:
             raise ValueError("Capacity must be a positive integer.")
 
         self.capacity = capacity  # 哈希表的容量
-        self.buckets: List[Optional[Node]] = [None] * self.capacity  # 桶（buckets）
+        self.buckets: List[Optional[Node]] = (
+            [None] * self.capacity
+        )
         self._size = 0  # number of the elements
         self._element_type: Optional[Type] = None  # 记录第一个元素的类型
 
@@ -143,7 +145,11 @@ class HashSet:
                 cur = cur.next_
         return new_set
 
-    def reduce(self, function: Callable[[Any, Any], Any], initial_state: Any) -> Any:
+    def reduce(
+        self,
+        function: Callable[[Any, Any], Any],
+        initial_state: Any,
+    ) -> Any:
         # 归约集合中的元素，返回最终结果
         state = initial_state
         for bucket in self.buckets:
