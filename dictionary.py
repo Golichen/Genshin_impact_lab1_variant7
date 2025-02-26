@@ -1,5 +1,4 @@
 from typing import Any, List, Optional, Callable, Tuple
-import warnings
 
 
 class Node:
@@ -181,7 +180,3 @@ class Dictionary:
         """返回字典的字符串表示"""
         items = self.to_list()
         return "{" + ", ".join(f"{k}: {v}" for k, v in items) + "}"
-
-    def __str__(self) -> str:
-        # 返回集合的字符串表示
-        return "{" + ", ".join(map(str, self.to_list())) + "}"
