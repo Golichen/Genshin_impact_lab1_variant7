@@ -5,9 +5,9 @@ from dictionary import Dictionary
 def test_add():
     # Test adding key-value pairs
     dictionary = Dictionary()
-    dictionary.add("a", "b")  # Simple string key and string value
+    dictionary.add("a", "b")
     assert dictionary.get("a") == "b"
-    dictionary.add("x", 1)   # Simple string key and integer value
+    dictionary.add("x", 1)
     assert dictionary.get("x") == 1
 
 
@@ -52,7 +52,7 @@ def test_member():
 def test_from_list():
     # Test building dictionary from a list
     dictionary = Dictionary()
-    dictionary.from_list([("a", "b"), ("x", 1)])  # Simple key-value pairs
+    dictionary.from_list([("a", "b"), ("x", 1)])
     assert dictionary.get("a") == "b"
     assert dictionary.get("x") == 1
 
@@ -74,7 +74,7 @@ def test_to_list():
 def test_filter():
     # Test filtering dictionary by a predicate
     dictionary = Dictionary()
-    dictionary.from_list([("a", "b"), ("x", 1), ("y", 2)])  # Simple key-value pairs
+    dictionary.from_list([("a", "b"), ("x", 1), ("y", 2)])
     filtered_dict = dictionary.filter(lambda k, v: isinstance(v, int))
 
     result = sorted(filtered_dict.to_list(), key=lambda x: str(x[0]))
@@ -185,9 +185,9 @@ def test_mixed_types():
     dictionary = Dictionary()
 
     # Add mixed types
-    dictionary.add("a", "b")  # String key, string value
-    dictionary.add("x", 1)   # String key, integer value
-    dictionary.add(1, "y")   # Integer key, string value
+    dictionary.add("a", "b")
+    dictionary.add("x", 1)
+    dictionary.add(1, "y")
 
     # Check values
     assert dictionary.get("a") == "b"
