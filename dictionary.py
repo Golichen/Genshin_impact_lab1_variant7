@@ -45,7 +45,7 @@ class Dictionary:
             self.buckets[index] = Node(key, value)
             self._size += 1
         else:
-            # Otherwise, traverse the linked list to check if the key already exists
+            # check if the key already exists
             cur = self.buckets[index]
             while cur is not None:
                 if cur.key == key:
@@ -60,7 +60,7 @@ class Dictionary:
             self._size += 1
 
     def get(self, key: Any) -> Optional[Any]:
-        # Get the value associated with the key, or return None if the key does not exist
+        # Get the value associated with the key
         if key is None:
             return None
 
@@ -83,7 +83,7 @@ class Dictionary:
         while cur is not None:
             if cur.key == key:
                 if prev is None:
-                    # If the node to remove is the first node in the linked list
+                    # If the node is the first node in the linked list
                     self.buckets[index] = cur.next_
                 else:
                     # Remove the node in the middle of the linked list
@@ -125,13 +125,17 @@ class Dictionary:
         return new_dict
 
     def map(self, function: Callable[[Any], Any]) -> 'Dictionary':
-        # Apply a function to each value in the dictionary and return a new dictionary
+        # Function for each value in the dictionary and return a new dictionary
         new_dict = Dictionary(self.capacity)
         for key, value in self.to_list():
             new_dict.add(key, function(value))
         return new_dict
 
-    def reduce(self, function: Callable[[Any, Any], Any], initial_state: Any) -> Any:
+    def reduce(
+        self,
+        function: Callable[[Any, Any], Any],
+        initial_state: Any
+    ) -> Any:
         # Reduce the values in the dictionary and return the final result
         state = initial_state
         for _, value in self.to_list():
