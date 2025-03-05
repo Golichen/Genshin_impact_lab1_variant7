@@ -1,9 +1,9 @@
 from typing import Any, List, Optional, Callable, Tuple
+import warnings
 
 
 class Node:
-    """表示哈希表中的节点（用于分离链接法）"""
-
+    # Represents a node in the hash table (used for separate chaining)
     def __init__(self, key: Any, value: Any, next_: Optional['Node'] = None):
         self.key = key
         self.value = value
@@ -11,21 +11,20 @@ class Node:
 
 
 class Dictionary:
-    """基于哈希映射和分离链接法实现的字典"""
-
+    # A dictionary implemented using hash map with separate chaining
     def __init__(self, capacity: int = 10):
-        # 验证 capacity 是否为整数且大于 0
+        # Validate that capacity is a positive integer
         if not isinstance(capacity, int) or capacity <= 0:
             raise ValueError("Capacity must be a positive integer.")
 
-        self.capacity = capacity  # 哈希表的容量
+        self.capacity = capacity  # The capacity of the hash table
         self.buckets: List[Optional[Node]] = (
             [None] * self.capacity
-        )  # 桶（buckets）
-        self._size = 0  # 字典中键值对的数量
+        )  # The buckets (each bucket is a linked list)
+        self._size = 0  # The number of key-value pairs in the dictionary
 
     def _hash(self, key: Any) -> int:
-        """计算键的哈希值，并映射到桶的索引"""
+        # Compute the hash value of the key and map it to a bucket index
         if key is None:
             raise ValueError("None keys are not allowed in this dictionary.")
         try:
@@ -34,7 +33,7 @@ class Dictionary:
             raise TypeError(f"Unhashable type: {type(key)}") from e
 
     def add(self, key: Any, value: Any) -> None:
-        """向字典中插入或更新键值对"""
+        # Insert or update a key-value pair in the dictionary
         if key is None:
             raise ValueError("None keys are not allowed in this dictionary.")
         if value is None:
@@ -42,24 +41,26 @@ class Dictionary:
 
         index = self._hash(key)
         if self.buckets[index] is None:
-            # 如果桶为空，直接插入节点
+            # If the bucket is empty, insert the node directly
             self.buckets[index] = Node(key, value)
             self._size += 1
         else:
-            # 否则，遍历链表，检查是否已存在相同的键
+            # Otherwise, traverse the linked list to check if the key already exists
             cur = self.buckets[index]
             while cur is not None:
                 if cur.key == key:
-                    # 如果键已存在，更新值
+                    # If the key exists, update the value
                     cur.value = value
                     return
                 if cur.next_ is None:
-                    cur.next_ = Node(key, value)
-                    self._size += 1
+                    break
                 cur = cur.next_
+            # Insert a new node at the end of the linked list
+            cur.next_ = Node(key, value)
+            self._size += 1
 
     def get(self, key: Any) -> Optional[Any]:
-        """根据键获取值，如果键不存在则返回 None"""
+        # Get the value associated with the key, or return None if the key does not exist
         if key is None:
             return None
 
@@ -72,7 +73,7 @@ class Dictionary:
         return None
 
     def remove(self, key: Any) -> None:
-        """根据键删除键值对"""
+        # Remove the key-value pair associated with the key
         if key is None:
             return
 
@@ -82,10 +83,10 @@ class Dictionary:
         while cur is not None:
             if cur.key == key:
                 if prev is None:
-                    # 如果要删除的是链表的第一个节点
+                    # If the node to remove is the first node in the linked list
                     self.buckets[index] = cur.next_
                 else:
-                    # 删除链表中间的节点
+                    # Remove the node in the middle of the linked list
                     prev.next_ = cur.next_
                 self._size -= 1
                 return
@@ -93,20 +94,20 @@ class Dictionary:
             cur = cur.next_
 
     def size(self) -> int:
-        """返回字典中键值对的数量"""
+        # Return the number of key-value pairs in the dictionary
         return self._size
 
     def member(self, key: Any) -> bool:
-        """检查字典中是否包含指定的键"""
+        # Check if the dictionary contains the specified key
         return self.get(key) is not None
 
     def from_list(self, lst: List[Tuple[Any, Any]]) -> None:
-        """从内置列表构建字典"""
+        # Build the dictionary from a built-in list of key-value pairs
         for key, value in lst:
             self.add(key, value)
 
     def to_list(self) -> List[Tuple[Any, Any]]:
-        """将字典转换为内置列表"""
+        # Convert the dictionary to a built-in list of key-value pairs
         result = []
         for bucket in self.buckets:
             cur = bucket
@@ -116,7 +117,7 @@ class Dictionary:
         return result
 
     def filter(self, predicate: Callable[[Any, Any], bool]) -> 'Dictionary':
-        """过滤字典中的键值对，返回满足谓词的新字典"""
+        # Filter the dictionary by a predicate and return a new dictionary
         new_dict = Dictionary(self.capacity)
         for key, value in self.to_list():
             if predicate(key, value):
@@ -124,31 +125,27 @@ class Dictionary:
         return new_dict
 
     def map(self, function: Callable[[Any], Any]) -> 'Dictionary':
-        """对字典中的每个值应用函数，返回新字典"""
+        # Apply a function to each value in the dictionary and return a new dictionary
         new_dict = Dictionary(self.capacity)
         for key, value in self.to_list():
             new_dict.add(key, function(value))
         return new_dict
 
-    def reduce(
-        self,
-        function: Callable[[Any, Any], Any],
-        initial_state: Any
-    ) -> Any:
-        """归约字典中的值，返回最终结果"""
+    def reduce(self, function: Callable[[Any, Any], Any], initial_state: Any) -> Any:
+        # Reduce the values in the dictionary and return the final result
         state = initial_state
         for _, value in self.to_list():
             state = function(state, value)
         return state
 
     def __iter__(self):
-        """返回字典的迭代器"""
+        # Return an iterator for the dictionary
         self._iter_index = 0
         self._iter_node = self.buckets[0]
         return self
 
     def __next__(self) -> Tuple[Any, Any]:
-        """返回字典的下一个键值对"""
+        # Return the next key-value pair in the dictionary
         while self._iter_index < self.capacity:
             if self._iter_node is not None:
                 key, value = self._iter_node.key, self._iter_node.value
@@ -162,11 +159,11 @@ class Dictionary:
 
     @staticmethod
     def empty() -> 'Dictionary':
-        """返回一个空字典"""
+        # Return an empty dictionary
         return Dictionary()
 
     def concat(self, other: 'Dictionary') -> 'Dictionary':
-        """连接两个字典，返回新字典"""
+        # Concatenate two dictionaries and return a new dictionary
         new_dict = Dictionary(self.capacity)
         for key, value in self.to_list():
             new_dict.add(key, value)
@@ -175,6 +172,6 @@ class Dictionary:
         return new_dict
 
     def __str__(self) -> str:
-        """返回字典的字符串表示"""
+        # Return a string representation of the dictionary
         items = self.to_list()
         return "{" + ", ".join(f"{k}: {v}" for k, v in items) + "}"
