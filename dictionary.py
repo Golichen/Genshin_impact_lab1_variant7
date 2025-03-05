@@ -52,11 +52,11 @@ class Dictionary:
                     cur.value = value
                     return
                 if cur.next_ is None:
-                    break
+                    # Insert a new node at the end of the linked list
+                    cur.next_ = Node(key, value)
+                    self._size += 1
                 cur = cur.next_
-            # Insert a new node at the end of the linked list
-            cur.next_ = Node(key, value)
-            self._size += 1
+            
 
     def get(self, key: Any) -> Optional[Any]:
         # Get the value associated with the key
