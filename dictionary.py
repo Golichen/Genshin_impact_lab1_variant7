@@ -1,5 +1,4 @@
 from typing import Any, List, Optional, Callable, Tuple
-import warnings
 
 
 class Node:
