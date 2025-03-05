@@ -56,7 +56,6 @@ class Dictionary:
                     cur.next_ = Node(key, value)
                     self._size += 1
                 cur = cur.next_
-            
 
     def get(self, key: Any) -> Optional[Any]:
         # Get the value associated with the key
