@@ -142,14 +142,13 @@ def test_concat():
     assert result == expected
 
 
-def test_monoid_properties():
-    # Test monoid properties (identity and associativity)
+def test_Monoid_properties():
+    # Test Monoid properties (identity and associativity)
+    # Identity property
     empty_dict = Dictionary.empty()
     dict1 = Dictionary()
     dict1.add("a", 1)
     dict1.add("b", 2)
-
-    # Identity property
     assert dict1.concat(empty_dict).to_list() == dict1.to_list()
     assert empty_dict.concat(dict1).to_list() == dict1.to_list()
 
